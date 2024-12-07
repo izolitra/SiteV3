@@ -1,0 +1,32 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="main/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href=" https://use.fontawesome.com/releases/v6.4.4/css/all.css">
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+{% endblock %}
+
+{% block body %}
+
+<div class ="main_container">
+    <div class = "wrap">
+    <img src="{% static 'main/img/bg-img.jpg' %}" alt="" style="width:1920px;height:550px;"class="bgimg">
+        <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="" class="logo">
+        <img src="{% static 'main/img/profile-img.jpg' %}" alt="" class="profile-logo">
+
+        <button type="button" class="main-button-black" style="position:absolute;width: 315px;height: 75px;top: 450px;left: 111px;"onclick="window.location.href='{% url 'applications_page' %}'">Найти автомеханика</button>
+        <button type="button" class="second-button-black" style="position:absolute;width: 315px;height: 75px;top: 450px;left: 444px;" onclick="window.location.href='{% url 'login' %}'">Я автомеханик</button>
+
+        <div class="main_text">
+                <div class="up_text" style="position:absolute; top:250px;width: 550px;height: 118px; color:white; left: 111px; "><h1>Сервис по поиску мобильных автомехаников</h1></div>
+                <div class="down_text" style="position:absolute; top:350px; left:111px; width:560px; color:white;height:90px;font-family: Montserrat;font-size: 25px;font-weight: 400;line-height: 45px;text-align: left;text-underline-position: from-font;text-decoration-skip-ink: none;"><h4>Механик всегда рядом – где бы вы ни были!</h4></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

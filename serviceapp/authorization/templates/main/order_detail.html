@@ -1,0 +1,12 @@
+<h2>Заказ от {{ order.customer_name }}</h2>
+<p>{{ order.description }}</p>
+<p>Статус: {{ order.get_status_display }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {% if order.status == 'new' %}
+        <button type="submit" name="start">Приступить</button>
+    {% elif order.status == 'in_progress' %}
+        <button type="submit" name="complete">Завершить</button>
+    {% endif %}
+</form>

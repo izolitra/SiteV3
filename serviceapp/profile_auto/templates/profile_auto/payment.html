@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата</title>
+    <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{% static 'profile_auto/css/payment.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="icon">
+                <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
+            </div>
+            <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
+            <button onclick="window.location.href='{% url 'profile_auto_home' %}'">Мои заказы</button>
+        </div>
+    <div>
+    <form>
+        <label for="service1-selection">Выберите первую услугу:</label>
+        <select name="selection1" id="service1-selection" onchange="updateTotalPrice()">
+            <option value="">-- Выберите услугу --</option>
+            <option value="Service" data-price="5000">Обслуживание и ремонт двигателей</option>
+            <option value="Repair" data-price="3000">Ремонт электрики в машинах</option>
+            <option value="Preparation" data-price="20000">Подготовка и продажа новых б/у автомобилей</option>
+            <option value="New-service" data-price="10000">Новая услуга</option>
+        </select>
+
+        <br><br>
+
+        <label for="service2-selection">Выберите вторую услугу:</label>
+        <select name="selection2" id="service2-selection" onchange="updateTotalPrice()">
+            <option value="">-- Выберите услугу --</option>
+            <option value="Service" data-price="5000">Обслуживание и ремонт двигателей</option>
+            <option value="Repair" data-price="3000">Ремонт электрики в машинах</option>
+            <option value="Preparation" data-price="20000">Подготовка и продажа новых б/у автомобилей</option>
+            <option value="New-service" data-price="10000">Новая услуга</option>
+        </select>
+
+        <br><br>
+
+        <label for="payment-method">Выберите способ оплаты:</label>
+        <select name="payment-method" id="payment-method" onchange="updateTotalPrice()">
+            <option value="">-- Выберите способ оплаты --</option>
+            <option value="card" data-discount="0">Картой (без скидки)</option>
+            <option value="sbp" data-discount="0.05">СБП (скидка 5%)</option>
+        </select>
+
+        <br><br>
+
+        <label for="address">Введите ваш адрес:</label>
+        <input type="text" id="address" placeholder="Улица, дом, квартира" oninput="updateTotalPrice()">
+
+    </form>
+
+    <p id="price-display" style="margin-top: 10px;">Общая стоимость: <span id="total-price">0</span> рублей</p>
+    <button id="pay-button" style="display: none;" onclick="processPayment()">Оплатить</button>
+</div>
+
+<script>
+    function updateTotalPrice() {
+        // Получаем выбранные элементы услуг
+        const service1Select = document.getElementById("service1-selection");
+        const service2Select = document.getElementById("service2-selection");
+
+        // Извлекаем цены из атрибутов data-price
+        const price1 = parseInt(service1Select.options[service1Select.selectedIndex]?.getAttribute("data-price")) || 0;
+        const price2 = parseInt(service2Select.options[service2Select.selectedIndex]?.getAttribute("data-price")) || 0;
+
+        // Суммируем цены услуг
+        let totalPrice = price1 + price2;
+
+        // Получаем выбранный метод оплаты
+        const paymentMethodSelect = document.getElementById("payment-method");
+        const discount = parseFloat(paymentMethodSelect.options[paymentMethodSelect.selectedIndex]?.getAttribute("data-discount")) || 0;
+
+        // Применяем скидку, если выбрано СБП
+        totalPrice = totalPrice * (1 - discount);
+
+        // Отображаем общую стоимость
+        const totalPriceDisplay = document.getElementById("total-price");
+        totalPriceDisplay.textContent = totalPrice.toFixed(2); // Два знака после запятой
+
+        // Показываем кнопку "Оплатить", если выбраны услуги, метод оплаты и заполнен адрес
+        const payButton = document.getElementById("pay-button");
+        const address = document.getElementById("address").value.trim();
+        if ((price1 > 0 || price2 > 0) && paymentMethodSelect.selectedIndex > 0 && address.length > 0) {
+            payButton.style.display = "block";
+        } else {
+            payButton.style.display = "none";
+        }
+    }
+
+    function processPayment() {
+        const address = document.getElementById("address").value.trim();
+        if (!address) {
+            alert("Пожалуйста, укажите ваш адрес.");
+            return;
+        }
+        // Сообщение об успешной оплате
+        alert("Оплата прошла успешно!\nВаш адрес: " + address);
+    }
+</script>
+
+    </div>
+</body>
+</html>

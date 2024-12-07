@@ -1,0 +1,21 @@
+<h2>Ваши услуги</h2>
+<ul>
+    {% for service in services %}
+        <li>{{ service.name }} - {{ service.price }} руб.</li>
+    {% endfor %}
+</ul>
+<form method="post">
+    {% csrf_token %}
+    {{ service_form.as_p }}
+    <button type="submit">Добавить услугу</button>
+</form>
+
+<h2>Ваши заказы</h2>
+<ul>
+    {% for order in orders %}
+        <li>
+            {{ order.customer_name }} - {{ order.description }} ({{ order.get_status_display }})
+            <a href="{% url 'order_detail' order.id %}">Подробнее</a>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static 'profile_auto/css/order_tracking.css' %}">
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="icon">
+                <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
+            </div>
+            <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
+            <button onclick="window.location.href='{% url 'profile_auto_home' %}'">Мои заказы</button>
+        </div>
+
+        <div class="main-content">
+
+            <div class="photo-and-services">
+              <div class="photo">
+                <p>Фото</p>
+                <button class="add-photo">+</button>
+                <p><strong>Логин: </strong>{{ user.username }}</p> <!-- Отображение логина пользователя -->
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit">Выйти</button> <!-- Кнопка выхода -->
+                </form>
+              </div>
+
+              <div class="services">
+    <h3>Ваши услуги:</h3>
+    {% if services %}
+        {% for service in services %}
+            <div class="service-item">
+                {{ forloop.counter }}. {{ service.category }}...цена {{ service.price }}
+                <button>x</button>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>У вас пока нет добавленных услуг.</p>
+    {% endif %}
+    <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        <div class="service-item">
+            <input type="text" name="category" placeholder="Введите вашу новую услугу" required>
+            <input type="number" name="price" placeholder="Введите цену" required>
+        </div>
+        <button type="submit" class="save-button">Сохранить</button>
+    </form>
+</div>
+
+            </div>
+
+
+            <div class="orders">
+                <div class="completed-orders">
+                    <h3>Выполненные заказы</h3>
+                    <p>информация 1-ом заказе</p>
+                    <p>информация 2-ом заказе</p>
+                    <p>информация 3-ем заказе</p>
+                </div>
+                <div class="new-orders">
+                    <h3>Невыполненные/новые заказы</h3>
+                    <div class="order-item">
+                        <p>информация 1-ом заказе</p>
+                        <button>Выполнено</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 2-ом заказе</p>
+                        <button>в процессе</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 3-ем заказе</p>
+                        <button>в процессе</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 4-ом заказе</p>
+                        <button>взять новое...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,113 @@
+/* Reset styles */
+body, p, div, button, h3 {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 200px 1fr 300px;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+}
+
+.sidebar {
+    background-color: #b0b0b0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 8px;
+}
+
+.icon img {
+    width: 50px;
+    height: 50px;
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    form {
+        background-color: #ffffff;
+        padding: 150px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
+        width: 110%;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333333;
+    }
+
+    select, input {
+        width: 100%; /* Поля и кнопка теперь занимают всю ширину формы */
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333333;
+    }
+
+    select:focus, input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+    }
+
+    #price-display {
+        font-size: 16px;
+        color: #333333;
+        margin-bottom: 20px;
+    }
+
+    #pay-button {
+        width: 160%;
+        padding: 10px;
+        background-color: #000000;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #pay-button:hover {
+        background-color: #0056b3;
+    }
+
+    #pay-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+
+    input::placeholder {
+        color: #bbbbbb;
+    }
+</style>

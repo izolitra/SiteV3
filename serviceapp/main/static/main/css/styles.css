@@ -1,0 +1,37 @@
+.main-button-black {
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.second-button-black {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.logo{
+    position:absolute;
+    width: 71px;
+    height: 74px;
+    top:40px;
+    left: 111px;
+    gap: 0px;
+    opacity: 0px;
+}
+.profile-logo{
+    position:absolute;
+    width: 50px;
+    height: 48px;
+    top:40px;
+    left: 1800px;
+    gap: 0px;
+    opacity: 0px;
+}
+

@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Специалисты</title>
+    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="{% static 'main/css/applications.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="background-image">
+            <div class="sidebar">
+                <div class="icon">
+                    <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
+            </div>
+            <button>Найти специалиста</button>
+            <button onclick="window.location.href='{% url 'profile_auto_home' %}'">Мои заказы</button>
+            </div>
+        </div>
+           <div class="announcements">
+        <div class="announcement">
+            <img src="{% static 'main/img/mexanic1.png' %}" alt="Фотография механика" class="photo">
+            <div class="info">
+                <h3>Иван Иванов</h3>
+                <ul>
+                    <li>Ремонт двигателя - 2000 руб</li>
+                    <li>Замена тормозных колодок - 1500 руб</li>
+                    <li>Диагностика авто - 1000 руб</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="announcement">
+            <img src="{% static 'main/img/mexanic2.png' %}" alt="Фотография механика" class="photo">
+            <div class="info">
+                <h3>Петр Петров</h3>
+                <ul>
+                    <li>Ремонт коробки передач - 3000 руб</li>
+                    <li>Замена масла - 800 руб</li>
+                    <li>Проверка электрики - 1200 руб</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="announcement">
+            <img src="{% static 'main/img/mexanic3.png' %}" alt="Фотография механика" class="photo">
+            <div class="info">
+                <h3>Алексей Сидоров</h3>
+                <ul>
+                    <li>Ремонт сцепления - 2500 руб</li>
+                    <li>Замена аккумулятора - 1000 руб</li>
+                    <li>Ремонт подвески - 2200 руб</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{% static 'main/css/stylesreg.css' %}">
+  <title>Регистрация</title>
+</head>
+<body>
+{% block body %}
+  <div class="container">
+    <div class="logo">
+      <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Mechanic Logo" class="logo">
+    </div>
+    <h2>Регистрация автомеханика</h2>
+   <form method="post" action="{% url 'register' %}">
+  {% csrf_token %}
+
+  <label for="id_username">Логин:</label>
+  {{ form.username }}
+
+
+  <label for="id_email">Электронная почта:</label>
+  {{ form.email }}
+
+
+  <label for="id_phone">Телефон:</label>
+  {{ form.phone }}
+
+
+  <label for="id_full_name">ФИО:</label>
+  {{ form.full_name }}
+
+
+  <label for="id_work_experience">Опыт работы:</label>
+  {{ form.work_experience }}
+
+
+  <label for="id_service_category">Категория услуг:</label>
+  {{ form.service_category }}
+
+
+  <label for="id_service_price">Стоимость услуг:</label>
+  {{ form.service_price }}
+
+
+  <label for="id_car">Автомобиль:</label>
+  {{ form.car }}
+
+
+  <label for="id_password1">Пароль:</label>
+  {{ form.password1 }}
+
+
+  <label for="id_password2">Подтверждение пароля:</label>
+  {{ form.password2 }}
+
+  <button type="submit">Зарегистрироваться</button>
+     {% if form.errors %}
+  <ul>
+    {% for field in form %}
+      {% for error in field.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endif %}
+
+</form>
+
+
+    <a href="{% url 'login' %}">У меня есть аккаунт</a>
+  </div>
+<form method="post" action="{% url 'register' %}">
+  {% csrf_token %}
+
+  {% if form.errors %}
+    <div style="color: red;">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</form>
+
+{% endblock %}
+
+</body>
+</html>
+
+<style>
+  .container {
+    height: 1080px;
+}
+
+label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+input[type="text"],
+input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+textarea.form-input {
+    resize: vertical;
+}
+
+</style>

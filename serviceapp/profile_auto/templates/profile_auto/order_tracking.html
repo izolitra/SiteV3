@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{% static 'profile_auto/css/order_tracking.css' %}">
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="icon">
+                <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
+            </div>
+            <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
+            <button onclick="window.location.href='{% url 'profile_auto_home' %}'">Мои заказы</button>
+        </div>
+
+        <div class="main-content">
+
+            <div class="photo-and-services">
+                <div class="photo">
+                    <p>Фото</p>
+                    <button class="add-photo">+</button>
+                </div>
+                <div class="services">
+                    <h3>Ваши услуги:</h3>
+                    <div class="service-item">1. Обслуживание и ремонт двигателей...цена <button>x</button></div>
+                    <div class="service-item">2. Ремонт электрики в машинах...цена <button>x</button></div>
+                    <div class="service-item">3. Подготовка и продажа новых или б/у автомобилей...цена <button>x</button></div>
+                    <div class="service-item"><input type="text" id="address" placeholder="введите вашу новую услугу" oninput="updateTotalPrice()"></div>
+                    <button class="save-button">Сохранить</button>
+                </div>
+            </div>
+
+
+            <div class="orders">
+                <div class="completed-orders">
+                    <h3>Выполненные заказы</h3>
+                    <p>информация 1-ом заказе</p>
+                    <p>информация 2-ом заказе</p>
+                    <p>информация 3-ем заказе</p>
+                </div>
+                <div class="new-orders">
+                    <h3>Невыполненные/новые заказы</h3>
+                    <div class="order-item">
+                        <p>информация 1-ом заказе</p>
+                        <button>Выполнено</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 2-ом заказе</p>
+                        <button>в процессе</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 3-ем заказе</p>
+                        <button>в процессе</button>
+                    </div>
+                    <div class="order-item">
+                        <p>информация 4-ом заказе</p>
+                        <button>взять новое...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
