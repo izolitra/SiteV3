@@ -10,14 +10,13 @@ def mechanic_detail(request, mechanic_id):
     services = mechanic.services.all()
     return render(request, 'main/mechanic_detail.html', {'mechanic': mechanic, 'services': services})
 
-
 def create_order(request):
     if request.method == 'POST':
         mechanic_id = request.POST.get('mechanic_id')
         service1_id = request.POST.get('service1')
         service2_id = request.POST.get('service2')
         payment_method = request.POST.get('payment_method')
-        address = request.POST.get('address')
+        address = request.POST.get('address')  # Получаем адрес из POST-запроса
 
         mechanic = get_object_or_404(Mechanic, id=mechanic_id)
 
@@ -38,7 +37,10 @@ def create_order(request):
 
         # Формируем описание с оплатой и адресом
         payment_method_description = "1. Наличные" if payment_method == "1" else "2. Безналичный расчет"
-        description = f"{service_description}, Оплата: {total_price} ₽, Способ оплаты: {payment_method_description}"
+        description = (
+            f"{service_description}, Оплата: {total_price} ₽, "
+            f"Способ оплаты: {payment_method_description}, Адрес: {address}"
+        )
 
         order = Order.objects.create(
             mechanic=mechanic,
@@ -50,6 +52,7 @@ def create_order(request):
         return redirect('mechanic_detail', mechanic_id=mechanic.id)
 
     return redirect('applications_page')
+
 
 
 def mechanics_list(request):

@@ -7,118 +7,8 @@
     <title>Специалисты</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="{% static 'main/css/applications.css' %}">
-    <style>
-    /* Основные стили */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-    }
+    <link rel="stylesheet" href="{% static 'main/css/applicationss.css' %}">
 
-    .container {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-    }
-
-    /* Карточка мастера */
-    .announcement {
-        background-color: white;
-        border: 1px solid #ddd;
-        padding: 20px;
-        margin: 10px 0;
-        border-radius: 5px;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .announcement h3 {
-        font-size: 18px;
-        margin-bottom: 15px;
-    }
-
-    .announcement ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .announcement ul li {
-        font-size: 16px;
-        margin: 5px 0;
-    }
-
-    /* Сетка для плиток */
-    .mechanics-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-
-    .mechanics-grid .announcement {
-        flex: 0 0 32%; /* Устанавливаем карточки на 3 в ряд */
-        box-sizing: border-box;
-        margin-bottom: 20px;
-    }
-
-    .mechanic-avatar {
-        width: 100px;
-        height: 100px;
-        background-color: #ccc;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: white;
-        border-radius: 50%;
-    }
-
-    /* Ограничиваем размеры аватаров */
-    .announcement img {
-        width: 100px;  /* Устанавливаем фиксированную ширину */
-        height: 100px; /* Устанавливаем фиксированную высоту */
-        object-fit: cover;  /* Сохраняем пропорции, чтобы изображение заполнило пространство */
-        border-radius: 50%;  /* Делает изображение круглым */
-        margin-bottom: 10px; /* Отступ от изображения */
-    }
-
-    /* В случае отсутствия аватара */
-    .announcement .no-photo {
-        width: 100px;
-        height: 100px;
-        background-color: #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-size: 14px;
-        margin: 0 auto 15px auto; /* Центрирование */
-        border-radius: 50%; /* Делает элемент круглым */
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sidebar {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .mechanics-grid .announcement {
-            flex: 0 0 48%; /* 2 карточки в ряду для экранов до 768px */
-        }
-    }
-
-    @media (max-width: 480px) {
-        .mechanics-grid .announcement {
-            flex: 0 0 100%; /* Одна карточка в ряду для экранов до 480px */
-        }
-    }
-</style>
 </head>
 <body>
     <div class="container">
@@ -127,8 +17,13 @@
                 <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
             </div>
             <p><strong>Логин: </strong>{{ user.username }}</p>
+
+            <button onclick="window.location.href='{% url 'index_page' %}'">Главная страница</button>
             <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
-            <button onclick="window.location.href='{% url 'profile' %}'">Личный кабинет</button>
+
+            {% if user.is_authenticated %}
+                <button onclick="window.location.href='{% url 'profile' %}'">Личный кабинет</button>
+            {% endif %}
         </div>
 
         <div class="mechanics-grid">

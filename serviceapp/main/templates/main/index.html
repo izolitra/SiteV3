@@ -19,7 +19,12 @@
         <img src="{% static 'main/img/profile-img.jpg' %}" alt="" class="profile-logo">
 
         <button type="button" class="main-button-black" style="position:absolute;width: 315px;height: 75px;top: 450px;left: 111px;"onclick="window.location.href='{% url 'applications_page' %}'">Найти автомеханика</button>
-        <button type="button" class="second-button-black" style="position:absolute;width: 315px;height: 75px;top: 450px;left: 444px;" onclick="window.location.href='{% url 'login' %}'">Я автомеханик</button>
+        <button type="button" class="second-button-black"
+                style="position:absolute;width: 315px;height: 75px;top: 450px;left: 444px;"
+                onclick="window.location.href='{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'login' %}{% endif %}'">
+            Я автомеханик
+        </button>
+
 
         <div class="main_text">
                 <div class="up_text" style="position:absolute; top:250px;width: 550px;height: 118px; color:white; left: 111px; "><h1>Сервис по поиску мобильных автомехаников</h1></div>

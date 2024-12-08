@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль</title>
     <link rel="stylesheet" href="{% static 'profile_auto/css/order_tracking.css' %}">
+    <link rel="stylesheet" href="{% static 'profile_auto/css/profile.css' %}">
 
 </head>
 <body>
@@ -16,11 +17,9 @@
                 <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
             </div>
             <p><strong>Логин: </strong>{{ user.username }}</p>
-
+            <button onclick="window.location.href='{% url 'index_page' %}'">Главная страница</button>
             <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
             <button onclick="window.location.href='{% url 'profile' %}'">Личный кабинет</button>
-
-
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
             <button type="submit">Выйти</button>
@@ -37,11 +36,9 @@
             <p>Аватар не загружен</p>
         {% endif %}
 
-        <!-- Форма загрузки аватара -->
         <form method="POST" enctype="multipart/form-data" class="upload-form">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <!-- Используем label для связывания с input и отображения имени файла -->
                         <label for="file-upload" class="file-label">Выберите файл</label>
                         <input type="file" name="avatar" id="file-upload" />
                         <button type="submit">Загрузить</button>
@@ -49,51 +46,6 @@
                 </div>
 <style>
 
-/* Изображение аватара, которое остается фиксированным */
-.photo img.avatar {
-    width: 100px; /* Устанавливаем ширину изображения */
-    height: 100px; /* Высота изображения */
-    border-radius: 50%; /* Делает картинку круглой */
-    position: absolute; /* Фиксированное позиционирование */
-    top: 20px; /* Отступ сверху от начала страницы */
-    left: 50%; /* Центрирование изображения по горизонтали */
-    transform: translateX(-50%); /* Корректируем центрирование по горизонтали */
-}
-.file-label {
-        cursor: pointer;
-        color: black;  /* Цвет текста черный */
-        text-decoration: underline;
-    }
-/* Форма загрузки аватара */
-.upload-form {
-    margin-top: 250px; /* Отступ сверху, чтобы форма не перекрывала картинку */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px; /* Отступы между элементами формы */
-}
-
-
-
-
-/* Стиль для input[type="file"] */
-#file-upload {
-    display: none; /* Скрыть стандартный input */
-
-
-}
-
-#file-upload + span {
-    cursor: pointer;
-    color: #007bff;
-    text-decoration: underline;
-
-}
-
-#file-upload + span:hover {
-    color: #0056b3;
-
-}
 </style>
 
               <div class="services">
@@ -127,48 +79,46 @@
 
 
             <div class="orders">
-    <!-- Выполненные заказы -->
-    <div class="completed-orders">
-        <h3>Выполненные заказы</h3>
-        {% for order in completed_orders %}
-            <div class="order-item">
-                <p><strong><a href="{% url 'order_detail' order.id %}">Заказ №{{ order.id }}:</a></strong> {{ order.description }}</p>
-            </div>
-        {% empty %}
-            <p>Нет выполненных заказов.</p>
-        {% endfor %}
-    </div>
+                <div class="completed-orders">
+                    <h3>Выполненные заказы</h3>
+                    {% for order in completed_orders %}
+                        <div class="order-item">
+                            <p><strong><a href="{% url 'order_detail' order.id %}">Заказ №{{ order.id }}:</a></strong> {{ order.description }}</p>
+                        </div>
+                    {% empty %}
+                        <p>Нет выполненных заказов.</p>
+                    {% endfor %}
+                </div>
 
-    <!-- Невыполненные/новые заказы -->
-    <div class="new-orders">
-        <h3>Невыполненные/новые заказы</h3>
-        {% for order in new_orders %}
-            <div class="order-item">
-                <p>
-                    <strong>
-                        <a href="{% url 'order_detail' order.id %}">Заказ №{{ order.id }}:</a> {{ order.description }}
-                    </strong>
-                </p>
-                {% if order.status == 'new' %}
-<form method="post" id="takeOrderForm" action="{% url 'take_order' order.id %}" style="display:inline;">
-    {% csrf_token %}
-    <button type="button" onclick="submitForm()">Взять заказ</button>
-</form>
+                <div class="new-orders">
+                    <h3>Невыполненные/новые заказы</h3>
+                    {% for order in new_orders %}
+                        <div class="order-item">
+                            <p>
+                                <strong>
+                                    <a href="{% url 'order_detail' order.id %}">Заказ №{{ order.id }}:</a> {{ order.description }}
+                                </strong>
+                            </p>
+                            {% if order.status == 'new' %}
+                            <form method="post" id="takeOrderForm" action="{% url 'take_order' order.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="button" onclick="submitForm()">Взять заказ</button>
+                            </form>
 
-{% elif order.status == 'in_progress' %}
-    <form method="post" id="completeOrderForm" action="{% url 'complete_order' order.id %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="button" onclick="completeOrder()">Завершить заказ</button>
-    </form>
-                {% else %}
-                    <button>Статус неизвестен</button>
-                {% endif %}
+                        {% elif order.status == 'in_progress' %}
+                            <form method="post" id="completeOrderForm" action="{% url 'complete_order' order.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="button" onclick="completeOrder()">Завершить заказ</button>
+                            </form>
+                        {% else %}
+                            <button>Статус неизвестен</button>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <p>Нет новых заказов.</p>
+                {% endfor %}
             </div>
-        {% empty %}
-            <p>Нет новых заказов.</p>
-        {% endfor %}
-    </div>
-</div>
+        </div>
 <script>
     function submitForm() {
     const form = document.getElementById('takeOrderForm');

@@ -1,0 +1,46 @@
+
+/* Изображение аватара, которое остается фиксированным */
+.photo img.avatar {
+    width: 100px; /* Устанавливаем ширину изображения */
+    height: 100px; /* Высота изображения */
+    border-radius: 50%; /* Делает картинку круглой */
+    position: absolute; /* Фиксированное позиционирование */
+    top: 20px; /* Отступ сверху от начала страницы */
+    left: 50%; /* Центрирование изображения по горизонтали */
+    transform: translateX(-50%); /* Корректируем центрирование по горизонтали */
+}
+.file-label {
+        cursor: pointer;
+        color: black;  /* Цвет текста черный */
+        text-decoration: underline;
+    }
+/* Форма загрузки аватара */
+.upload-form {
+    margin-top: 250px; /* Отступ сверху, чтобы форма не перекрывала картинку */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Отступы между элементами формы */
+}
+
+
+
+
+/* Стиль для input[type="file"] */
+#file-upload {
+    display: none; /* Скрыть стандартный input */
+
+
+}
+
+#file-upload + span {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+
+}
+
+#file-upload + span:hover {
+    color: #0056b3;
+
+}
