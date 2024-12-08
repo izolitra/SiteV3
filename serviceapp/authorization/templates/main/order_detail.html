@@ -1,12 +1,11 @@
-<h2>Заказ от {{ order.customer_name }}</h2>
-<p>{{ order.description }}</p>
-<p>Статус: {{ order.get_status_display }}</p>
+{% load static %}
+<link rel="stylesheet" href="{% static 'profile_auto/css/order_tracking.css' %}">
+<div class="container">
+<h1>Детали заказа #{{ order.id }}</h1>
+<p><strong>Заказ от:</strong> {{ order.customer_name }}</p>
+<p><strong>Статус заказа:</strong> {{ order.get_status_display }}</p>
 
-<form method="post">
-    {% csrf_token %}
-    {% if order.status == 'new' %}
-        <button type="submit" name="start">Приступить</button>
-    {% elif order.status == 'in_progress' %}
-        <button type="submit" name="complete">Завершить</button>
-    {% endif %}
-</form>
+<p><strong>Описание:</strong> {{ order.description }}</p>
+
+</div>
+

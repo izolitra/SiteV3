@@ -3,19 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django.db import models
-from django.contrib.auth.models import User
-from django.db import models
-from django.contrib.auth.models import User
-
-class Service(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=User.objects.first)
-    category = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return f"{self.category} - {self.price}"
-
 
 
 class Order(models.Model):
@@ -36,7 +23,7 @@ class Order(models.Model):
 # Профиль пользователя
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    discount = models.IntegerField(default=0, verbose_name="Персональная скидка")
+
 
     def __str__(self):
         return self.user.email
@@ -55,9 +42,11 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+
 class Mechanic(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255, verbose_name="Полное имя", blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     phone = models.CharField(max_length=15, verbose_name="Телефон", blank=True)
     email = models.EmailField(verbose_name="Электронная почта", blank=True)
     work_experience = models.TextField(verbose_name="Опыт работы", blank=True)
@@ -65,9 +54,21 @@ class Mechanic(models.Model):
     service_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена услуги", default=0)
     car = models.CharField(max_length=255, verbose_name="Автомобиль", blank=True)
 
+    # Связь ManyToMany с моделью Service
+    # services = models.ManyToManyField(Service, related_name='mechanics_set', blank=True)  # Изменил related_name
+
     def __str__(self):
         return self.user.username
 
     class Meta:
         verbose_name = "Механик"
         verbose_name_plural = "Механики"
+
+
+class Service(models.Model):
+    mechanic = models.ForeignKey(Mechanic, related_name='services', on_delete=models.CASCADE)
+    category = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.category} - {self.price}'

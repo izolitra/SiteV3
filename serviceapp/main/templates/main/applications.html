@@ -6,55 +6,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Специалисты</title>
     <link rel="stylesheet" href="styles.css">
-     <link rel="stylesheet" href="{% static 'main/css/applications.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/applications.css' %}">
+    <style>
+    /* Основные стили */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    /* Карточка мастера */
+    .announcement {
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .announcement h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .announcement ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .announcement ul li {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    /* Сетка для плиток */
+    .mechanics-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .mechanics-grid .announcement {
+        flex: 0 0 32%; /* Устанавливаем карточки на 3 в ряд */
+        box-sizing: border-box;
+        margin-bottom: 20px;
+    }
+
+    .mechanic-avatar {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: white;
+        border-radius: 50%;
+    }
+
+    /* Ограничиваем размеры аватаров */
+    .announcement img {
+        width: 100px;  /* Устанавливаем фиксированную ширину */
+        height: 100px; /* Устанавливаем фиксированную высоту */
+        object-fit: cover;  /* Сохраняем пропорции, чтобы изображение заполнило пространство */
+        border-radius: 50%;  /* Делает изображение круглым */
+        margin-bottom: 10px; /* Отступ от изображения */
+    }
+
+    /* В случае отсутствия аватара */
+    .announcement .no-photo {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 14px;
+        margin: 0 auto 15px auto; /* Центрирование */
+        border-radius: 50%; /* Делает элемент круглым */
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .mechanics-grid .announcement {
+            flex: 0 0 48%; /* 2 карточки в ряду для экранов до 768px */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .mechanics-grid .announcement {
+            flex: 0 0 100%; /* Одна карточка в ряду для экранов до 480px */
+        }
+    }
+</style>
 </head>
 <body>
     <div class="container">
-        <div class="background-image">
-            <div class="sidebar">
-                <div class="icon">
-                    <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
+        <div class="sidebar">
+            <div class="icon">
+                <img onclick="window.location.href='{% url 'index_page' %}'" src="{% static 'main/img/logo-mechanic.jpg' %}" alt="Car Icon">
             </div>
-            <button>Найти специалиста</button>
-            <button onclick="window.location.href='{% url 'profile_auto_home' %}'">Мои заказы</button>
-            </div>
-        </div>
-           <div class="announcements">
-        <div class="announcement">
-            <img src="{% static 'main/img/mexanic1.png' %}" alt="Фотография механика" class="photo">
-            <div class="info">
-                <h3>Иван Иванов</h3>
-                <ul>
-                    <li>Ремонт двигателя - 2000 руб</li>
-                    <li>Замена тормозных колодок - 1500 руб</li>
-                    <li>Диагностика авто - 1000 руб</li>
-                </ul>
-            </div>
+            <p><strong>Логин: </strong>{{ user.username }}</p>
+            <button onclick="window.location.href='{% url 'applications_page' %}'">Найти специалиста</button>
+            <button onclick="window.location.href='{% url 'profile' %}'">Личный кабинет</button>
         </div>
 
-        <div class="announcement">
-            <img src="{% static 'main/img/mexanic2.png' %}" alt="Фотография механика" class="photo">
-            <div class="info">
-                <h3>Петр Петров</h3>
-                <ul>
-                    <li>Ремонт коробки передач - 3000 руб</li>
-                    <li>Замена масла - 800 руб</li>
-                    <li>Проверка электрики - 1200 руб</li>
-                </ul>
-            </div>
-        </div>
+        <div class="mechanics-grid">
 
+
+    {% for mechanic in mechanics %}
         <div class="announcement">
-            <img src="{% static 'main/img/mexanic3.png' %}" alt="Фотография механика" class="photo">
-            <div class="info">
-                <h3>Алексей Сидоров</h3>
-                <ul>
-                    <li>Ремонт сцепления - 2500 руб</li>
-                    <li>Замена аккумулятора - 1000 руб</li>
-                    <li>Ремонт подвески - 2200 руб</li>
-                </ul>
-            </div>
+            {% if mechanic.avatar %}
+                <img src="{{ mechanic.avatar.url }}" alt="{{ mechanic.full_name }}">
+            {% else %}
+                <div class="no-photo">No photo</div>
+            {% endif %}
+            <h3><a href="{% url 'mechanic_detail' mechanic.id %}">{{ mechanic.full_name }}</a></h3>
+            <p><strong>Услуги:</strong></p>
+            <ul>
+                {% for service in mechanic.services.all|slice:":3" %}
+                    <li>{{ service.category }}
+                        <form action="{% url 'create_order' mechanic.id service.id %}" method="post">
+                            {% csrf_token %}
+                        </form>
+                    </li>
+                {% empty %}
+                    <li>Нет услуг</li>
+                {% endfor %}
+            </ul>
         </div>
+    {% endfor %}
+</div>
+
+
     </div>
 </body>
 </html>

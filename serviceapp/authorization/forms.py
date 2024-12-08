@@ -1,17 +1,21 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Mechanic
+from .models import User
 from django.contrib.auth.forms import AuthenticationForm
+from .models import Order
+from .models import Service
 from django import forms
-from django.contrib.auth import authenticate
-from django import forms
-from .models import Service, Order
+from .models import Mechanic
 
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Mechanic
+        fields = ['avatar']
 
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ['user', 'category', 'price']
+        fields = ['category', 'price']  # Мы будем работать с этими полями
+
 
 class OrderForm(forms.ModelForm):
     class Meta:
@@ -57,16 +61,17 @@ class MechanicRegistrationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.full_name = self.cleaned_data['full_name']
-        user.phone = self.cleaned_data['phone']
         if commit:
             user.save()
-            Mechanic.objects.create(
-                user=user,
-                work_experience=self.cleaned_data['work_experience'],
-                service_category=self.cleaned_data['service_category'],
-                service_price=self.cleaned_data['service_price'],
-                car=self.cleaned_data['car']
-            )
+
+        mechanic = Mechanic.objects.create(
+            user=user,
+            full_name=self.cleaned_data['full_name'],
+            phone=self.cleaned_data['phone'],
+            email=self.cleaned_data['email'],
+            work_experience=self.cleaned_data['work_experience'],
+            service_category=self.cleaned_data['service_category'],
+            service_price=self.cleaned_data['service_price'],
+            car=self.cleaned_data['car']
+        )
         return user
